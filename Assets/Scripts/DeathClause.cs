@@ -44,8 +44,11 @@ public class DeathClause : MonoBehaviour
         camPos = _cam.transform.position;
 
         //spawn location of collectable 
-        collectable = GameObject.Find("Collectable");
-        colspawnpos = collectable.transform.position;
+        if(GameObject.Find("Collectable")){
+            collectable = GameObject.Find("Collectable");
+            colspawnpos = collectable.transform.position;
+        }
+    
         
         //boost
         boostforward = new Vector2(boostSpeed, 0f);
@@ -126,8 +129,10 @@ public class DeathClause : MonoBehaviour
         //destroy lines
         //if(GameObject.Find("Line(Clone)") != null) Destroy(GameObject.Find("Line(Clone)"));
         GameObject[] names = GameObject.FindGameObjectsWithTag("LineClone");
+        if ( names != null){
         foreach(GameObject item in names){
          Destroy(item);
+        }
         }
         //reset collected
         if(collected){

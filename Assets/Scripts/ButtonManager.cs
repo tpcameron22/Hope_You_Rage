@@ -9,6 +9,8 @@ public class ButtonManager : MonoBehaviour
     //pause menu items
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    private GameObject ball;
+    private Vector2 ballspawnpos;
 
     //unlock level list
     public Button[] levelButtons;
@@ -47,7 +49,13 @@ public class ButtonManager : MonoBehaviour
          Time.timeScale = 0f;
          GameIsPaused = true;
         }
-
+//destroy lines
+        public void DestroyLines(){
+                GameObject[] names = GameObject.FindGameObjectsWithTag("LineClone");
+                foreach(GameObject item in names){
+                Destroy(item);
+                }
+        }
 
 //Level Select
         public void LevelSelect(){  
@@ -112,7 +120,13 @@ public class ButtonManager : MonoBehaviour
                 if(levelButtons.Length > 1){
                  for (int i = 0; i < levelButtons.Length; i++)
                  {
-                   if(i > levelReached) levelButtons[i].interactable = false;
+                   if(i < levelReached){
+                        var image = levelButtons[i].transform.GetChild(1).gameObject;
+                        image.GetComponent<Image>().enabled = false;
+                   }
+                   if(i + 1 > levelReached){
+                        levelButtons[i].interactable = false;
+                   } 
                         
                  }
                 }
